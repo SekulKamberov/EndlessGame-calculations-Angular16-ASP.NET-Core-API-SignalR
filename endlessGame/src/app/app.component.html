@@ -1,0 +1,57 @@
+
+
+<div *ngIf="auth === false" class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 offset-lg-2 offset-md-2 float-md-center">
+  <div class="container"> 
+    
+    <div class="container-fluid col-lg-10 col-md-9 col-sm-10 col-xs-10 mt-12">
+
+      <div class="input-group input-group-sm col-sm-12 mt-5">
+        <h2 class="text-center">Sign In/Up with Username</h2> 
+      </div> 
+
+        <form (ngSubmit)="onSubmit()" #usernameForm="ngForm">
+          <div class="form-group">
+            <label for="username">username</label>
+            <input type="text" required [(ngModel)]="model.username" name="username" #username="ngModel" /> 
+          </div> 
+          <button type="submit" class="btn btn-success" >Submit</button>
+        </form>
+
+    </div>
+
+  </div> 
+</div>  
+
+<div *ngIf="auth" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 offset-lg-2 offset-md-2 float-md-center">
+ 
+    <div class="container"> 
+      <div class="container-fluid col-lg-10 col-md-9 col-sm-10 col-xs-10">
+ 
+            <div class="input-group input-group-sm col-sm-12 mt-5 mb-2">
+              <h1 class="text-center">{{maxscore.username}} Record: {{maxscore.score}}</h1> 
+            </div>   
+
+            <div class="input-group input-group-sm col-sm-12 mt-5"> 
+              <h3 >{{username}} score {{result}} </h3>
+              <div class="input-group input-group-sm col-sm-12 m-0 p-0 mb-2"> 
+                {{input}}  {{steps}}
+              </div>
+            </div>
+
+            <div class="col-sm-12" *ngIf="!result">
+              <input type="number" min="1" name="input" [(ngModel)]="input" *ngIf="hide" 
+                class="input-group input-group-sm col-sm-6 mb-3" 
+              /> 
+            </div>
+
+            <div class="col-sm-12"> 
+              <button class="btn btn-lg btn-outline-danger col-sm-2"  [disabled]="oneTime" type="button" (click)="undo()">Undo</button>
+              <button class="btn btn-lg btn-outline-warning col-sm-2 ml-1" type="button" (click)="addTwenty()">+ 20</button>
+              <button class="btn btn-lg btn-outline-success col-sm-2 ml-1" type="button" (click)="multiplyTwo()">* 2</button>
+            </div>  
+            <div class="col-sm-6 mt-5">
+              {{gameHistory}}
+            </div>
+      </div> 
+    </div>  
+</div>
