@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router'; 
 import { FormsModule } from '@angular/forms';
 import { SignalrService } from './services/signalr.service';
-import { HttpClientModule, HttpClient } from '@angular/common/http'; 
+import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http'; 
 import * as signalR from "@microsoft/signalr"
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment'; 
+ 
+
 
 interface History {
   stepNumber: number;
@@ -29,7 +31,7 @@ interface User {
 
 export class AppComponent implements OnInit {
   url: string = environment.apiBaseUrl + '/user/'
-  
+   
   username: string = '';
   input: number = 1;
   oneTime: boolean = false;
@@ -60,6 +62,7 @@ export class AppComponent implements OnInit {
   onSubmit() {  
     this.username = this.model.username;    
     let history = this.gameHistory.length == 0 ? "|" :  this.gameHistory;
+   
     this.http.get<User>(this.url + this.username + '/' + this.result + '/' + history).subscribe(
     (response)  => {  
       this.result = Number(response.score); 
@@ -70,7 +73,10 @@ export class AppComponent implements OnInit {
       this.auth = true;
     },
     (error) => { console.log(error); });  
+    
   }
+
+
   
   public setItem(key: string, data: string): void {  
     localStorage.setItem(key, JSON.stringify(data));
@@ -112,6 +118,8 @@ export class AppComponent implements OnInit {
       this.result = this.input; 
       this.gameHistory +=  " + 200";  
       console.log('result ------------------------------', this.result);
+
+      /*
       this.http.get(this.url + this.username + '/' + this.result + '/' + this.gameHistory).subscribe(
         (response) => { 
           
@@ -120,6 +128,26 @@ export class AppComponent implements OnInit {
           this.auth = true;
         },
         (error) => { console.log(error); }); 
+        */
+ 
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json' 
+          })
+        }; 
+
+        this.http.post<User>(this.url, {
+          username: this.username,
+          score: this.result,
+          history: this.gameHistory
+        }, httpOptions).subscribe(
+          (response) => { 
+            
+            this.result = Number(response);   
+            this.setItem("username", this.model.username);
+            this.auth = true;
+          },
+          (error) => { console.log(error); }); 
     }
   }
 

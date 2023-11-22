@@ -33,7 +33,7 @@ namespace EndlessGame.Controllers
       public IActionResult User(string username, int score, string gameHistory)
       {
         var users = context.Users.AsQueryable();
-        var maxScore = users.Max(s => (int?)s.Score);
+        var maxScore = users.Max(s => (long?)s.Score);
         var champion = context.Users.FirstOrDefault(s => s.Score == maxScore);
         var user = users.FirstOrDefault(u => u.Username == username);
 
@@ -71,5 +71,47 @@ namespace EndlessGame.Controllers
         } 
       }
 
+    [HttpPost("user/")]
+    public IActionResult User([FromBody] User dat)
+    {
+      var users = context.Users.AsQueryable();
+      var maxScore = users.Max(s => (long?)s.Score);
+      var champion = context.Users.FirstOrDefault(s => s.Score == maxScore);
+      var user = users.FirstOrDefault(u => u.Username == dat.Username);
+
+      var history = dat.History != "|" ? dat.History : "";
+      if (dat.Score > maxScore)
+      {
+        var champ = new User { Username = dat.Username, Score = dat.Score, History = history };
+        _hub.Clients.All.SendAsync("score", champ);
+      }
+
+      else //(champion != null)
+      {
+        _hub.Clients.All.SendAsync("score", champion);
+      }
+
+      if (user != null && user.Score >= dat.Score)
+      {
+        var currentUser = new User { Username = user.Username, Score = user.Score, History = user.History };
+        return Ok(currentUser);
+      }
+
+      if (user != null && user.Score < dat.Score)
+      {
+        user.Score = dat.Score;
+        user.History = user.History + history;
+        var saved = context.SaveChanges();
+        return Ok(dat.Score);
+      }
+
+      else
+      {
+        context.Add(new User { Score = dat.Score, Username = dat.Username, History = history });
+        var saved = context.SaveChanges();
+        return Ok(dat.Score);
+      }
     }
+
+  }
   } 
