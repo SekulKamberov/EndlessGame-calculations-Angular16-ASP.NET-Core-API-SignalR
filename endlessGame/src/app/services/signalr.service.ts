@@ -46,6 +46,7 @@ export class SignalrService {
 
     public addBroadcastDataListener = () => { 
       this.hubConnection.on('score', (data: User) => { 
+        console.log('data.score ------------------------------', data.score);
         this.maxScore.next(data); 
          
       }) 

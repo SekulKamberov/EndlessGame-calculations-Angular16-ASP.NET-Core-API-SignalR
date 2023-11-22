@@ -17,7 +17,7 @@ interface History {
 
 interface User {
   username: string;
-  score: number; 
+  score: number | BigInt; 
   history: string;
 }
 
@@ -143,7 +143,8 @@ export class AppComponent implements OnInit {
         }, httpOptions).subscribe(
           (response) => { 
             
-            this.result = Number(response);   
+            //this.result = 
+            (typeof response === "bigint") ? BigInt(response) : Number(response);   
             this.setItem("username", this.model.username);
             this.auth = true;
           },
