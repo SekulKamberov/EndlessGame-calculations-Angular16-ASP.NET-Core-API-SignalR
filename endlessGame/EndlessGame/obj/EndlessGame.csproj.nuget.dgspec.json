@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sekne\\Documents\\SBe4ko\\Angular16-ASP.NET-Core-API-SignalR-EndlessGame-calculations\\endlessGame\\EndlessGame\\EndlessGame.csproj": {}
+    "C:\\Users\\sekne\\Documents\\SBe4ko\\Angular16-ASP.NET-Core-API-SignalR-EndlessGame-calculations\\EndlessGame\\EndlessGame\\EndlessGame.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sekne\\Documents\\SBe4ko\\Angular16-ASP.NET-Core-API-SignalR-EndlessGame-calculations\\endlessGame\\EndlessGame\\EndlessGame.csproj": {
+    "C:\\Users\\sekne\\Documents\\SBe4ko\\Angular16-ASP.NET-Core-API-SignalR-EndlessGame-calculations\\EndlessGame\\EndlessGame\\EndlessGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sekne\\Documents\\SBe4ko\\Angular16-ASP.NET-Core-API-SignalR-EndlessGame-calculations\\endlessGame\\EndlessGame\\EndlessGame.csproj",
+        "projectUniqueName": "C:\\Users\\sekne\\Documents\\SBe4ko\\Angular16-ASP.NET-Core-API-SignalR-EndlessGame-calculations\\EndlessGame\\EndlessGame\\EndlessGame.csproj",
         "projectName": "EndlessGame",
-        "projectPath": "C:\\Users\\sekne\\Documents\\SBe4ko\\Angular16-ASP.NET-Core-API-SignalR-EndlessGame-calculations\\endlessGame\\EndlessGame\\EndlessGame.csproj",
+        "projectPath": "C:\\Users\\sekne\\Documents\\SBe4ko\\Angular16-ASP.NET-Core-API-SignalR-EndlessGame-calculations\\EndlessGame\\EndlessGame\\EndlessGame.csproj",
         "packagesPath": "C:\\Users\\sekne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sekne\\Documents\\SBe4ko\\Angular16-ASP.NET-Core-API-SignalR-EndlessGame-calculations\\endlessGame\\EndlessGame\\obj\\",
+        "outputPath": "C:\\Users\\sekne\\Documents\\SBe4ko\\Angular16-ASP.NET-Core-API-SignalR-EndlessGame-calculations\\EndlessGame\\EndlessGame\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\sekne\\AppData\\Roaming\\NuGet\\NuGet.Config",

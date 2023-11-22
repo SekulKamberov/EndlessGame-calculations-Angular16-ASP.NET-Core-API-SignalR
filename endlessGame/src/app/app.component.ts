@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   auth: boolean = false; 
 
   steps: number = 0;
-  result: BigInt = BigInt(1);
+  result: BigInt = BigInt(0);
   history: History[] = []; 
   gameHistory: string = "";
 
@@ -62,10 +62,11 @@ export class AppComponent implements OnInit {
   onSubmit() {  
     this.username = this.model.username;    
     let history = this.gameHistory.length == 0 ? "|" :  this.gameHistory;
-   
-    this.http.get<User>(this.url + this.username + '/' + this.result + '/' + history).subscribe(
+    let resStr = this.result.toString();
+    console.log('resStr -=-=-==-=-=-=', resStr)
+    this.http.get<User>(this.url + this.username + '/' + resStr + '/' + history).subscribe(
     (response)  => {  
-      this.result = response.score ? BigInt(response.score.toString()) : BigInt(1); 
+      this.result = BigInt(response.score.toString()) ? BigInt(response.score.toString()) : BigInt(1); 
       this.input = Number(response.score);
       this.gameHistory += response.history ? response.history : ''; 
       console.log('response.history', response.history)
@@ -139,13 +140,13 @@ export class AppComponent implements OnInit {
 
         this.http.post<User>(this.url, {
           username: this.username,
-          score: typeof this.result === "bigint" ? this.result.toString() : this.result,
+          score: this.result + "",//BigInt(this.result.toString()), 
           //typeof this.result === "bigint" ? this.result.toString() + "n" : this.result
           history: this.gameHistory
         }, httpOptions).subscribe(
           (response) => { 
-            
-            this.result = BigInt(response.toString())
+            console.log('response -=-=-=--=--', response)
+            this.result = BigInt(response.toString()); //BigInt(response.score.toString()),//(typeof response.score === "bigint") ? BigInt(response.score) : BigInt(response.score.toString());   
             //(typeof response === "bigint") ? BigInt(response) : Number(response);   
             this.setItem("username", this.model.username);
             this.auth = true;

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 
 namespace EndlessGame.Entities
 {
@@ -8,6 +9,14 @@ namespace EndlessGame.Entities
         public int Id { get; set; }
         public string? Username { get; set; }
         public string? History { get; set; }
-        public long? Score { get; set; }
+        public long Score { get; set; }
     }
+
+  public class UserBindingModel
+  {
+    [Key] 
+    public string? Username { get; set; }
+    public string? History { get; set; }
+    public string Score { get; set; }
+  }
 }

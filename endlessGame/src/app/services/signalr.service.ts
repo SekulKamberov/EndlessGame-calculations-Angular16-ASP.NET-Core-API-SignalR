@@ -37,16 +37,13 @@ export class SignalrService {
         .catch(err => console.log('Error while starting connection: ' + err))
     }
      
-    public broadcastData = (username: string) => { 
-      console.log('broadcastdata')
-      
+    public broadcastData = (username: string) => {  
       this.hubConnection.invoke('broadcastdata', username)
       .catch(err => console.error(err));
     }
 
     public addBroadcastDataListener = () => { 
-      this.hubConnection.on('score', (data: User) => { 
-        console.log('data.score ------------------------------', data.score);
+      this.hubConnection.on('score', (data: User) => {  
         this.maxScore.next(data); 
          
       }) 
