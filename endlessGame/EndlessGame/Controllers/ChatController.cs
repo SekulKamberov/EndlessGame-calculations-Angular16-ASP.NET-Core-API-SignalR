@@ -30,7 +30,7 @@ namespace EndlessGame.Controllers
       }
      
       [HttpGet("user/{username?}/{score?}/{gameHistory}")]
-      public IActionResult User(string username, int score, string gameHistory)
+      public IActionResult User(string username, long? score, string gameHistory)
       {
         var users = context.Users.AsQueryable();
         var maxScore = users.Max(s => (long?)s.Score);

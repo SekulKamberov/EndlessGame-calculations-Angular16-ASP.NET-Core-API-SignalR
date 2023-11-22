@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   auth: boolean = false; 
 
   steps: number = 0;
-  result: number = 0;
+  result: BigInt = BigInt(1);
   history: History[] = []; 
   gameHistory: string = "";
 
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
    
     this.http.get<User>(this.url + this.username + '/' + this.result + '/' + history).subscribe(
     (response)  => {  
-      this.result = response.score ? Number(response.score) : 0; 
+      this.result = response.score ? BigInt(response.score.toString()) : BigInt(1); 
       this.input = Number(response.score);
       this.gameHistory += response.history ? response.history : ''; 
       console.log('response.history', response.history)
@@ -116,9 +116,9 @@ export class AppComponent implements OnInit {
       this.input += 200;
       this.history.push({stepNumber: this.steps, operation: "+ 200"})
      
-      this.result = this.input; 
-      this.gameHistory +=  " + 200";  
-      console.log('result ------------------------------', this.result);
+      this.result = BigInt(this.input); 
+      console.log('this.result', this.result);
+      this.gameHistory +=  " + 200";   
 
       /*
       this.http.get(this.url + this.username + '/' + this.result + '/' + this.gameHistory).subscribe(
@@ -139,12 +139,13 @@ export class AppComponent implements OnInit {
 
         this.http.post<User>(this.url, {
           username: this.username,
-          score: this.result,
+          score: typeof this.result === "bigint" ? this.result.toString() : this.result,
+          //typeof this.result === "bigint" ? this.result.toString() + "n" : this.result
           history: this.gameHistory
         }, httpOptions).subscribe(
           (response) => { 
             
-            this.result = Number(response)
+            this.result = BigInt(response.toString())
             //(typeof response === "bigint") ? BigInt(response) : Number(response);   
             this.setItem("username", this.model.username);
             this.auth = true;
