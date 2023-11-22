@@ -65,9 +65,10 @@ export class AppComponent implements OnInit {
    
     this.http.get<User>(this.url + this.username + '/' + this.result + '/' + history).subscribe(
     (response)  => {  
-      this.result = Number(response.score); 
+      this.result = response.score ? Number(response.score) : 0; 
       this.input = Number(response.score);
-      this.gameHistory = response.history; 
+      this.gameHistory += response.history ? response.history : ''; 
+      console.log('response.history', response.history)
 
       this.setItem("username", this.model.username);
       this.auth = true;
@@ -143,8 +144,8 @@ export class AppComponent implements OnInit {
         }, httpOptions).subscribe(
           (response) => { 
             
-            //this.result = 
-            (typeof response === "bigint") ? BigInt(response) : Number(response);   
+            this.result = Number(response)
+            //(typeof response === "bigint") ? BigInt(response) : Number(response);   
             this.setItem("username", this.model.username);
             this.auth = true;
           },
