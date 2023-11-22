@@ -86,7 +86,7 @@ namespace EndlessGame.Controllers
         _hub.Clients.All.SendAsync("score", champ);
       }
 
-      else //(champion != null)
+      else 
       {
         _hub.Clients.All.SendAsync("score", champion);
       }
