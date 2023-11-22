@@ -29,7 +29,7 @@ namespace EndlessGame.Controllers
         return Ok(new { Message = "Request Completed" });
       }
      
-      [HttpGet("user/{username}/{score}/{gameHistory}")]
+      [HttpGet("user/{username?}/{score?}/{gameHistory}")]
       public IActionResult User(string username, int score, string gameHistory)
       {
         var users = context.Users.AsQueryable();
@@ -44,7 +44,7 @@ namespace EndlessGame.Controllers
           _hub.Clients.All.SendAsync("score", champ);
         }
 
-        if (champion != null)
+        else //(champion != null)
         {
           _hub.Clients.All.SendAsync("score", champion);
         }
@@ -63,13 +63,12 @@ namespace EndlessGame.Controllers
           return Ok(score);
         }
 
-        if(user == null)
+        else
         { 
           context.Add(new User { Score = score, Username = username, History = history });
           var saved = context.SaveChanges();
           return Ok(score);
-        }
-      return Ok();
+        } 
       }
 
     }

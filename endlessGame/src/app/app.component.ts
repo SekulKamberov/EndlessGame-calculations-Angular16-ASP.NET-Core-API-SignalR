@@ -111,7 +111,7 @@ export class AppComponent implements OnInit {
      
       this.result = this.input; 
       this.gameHistory +=  " + 200";  
-      
+      console.log('result ------------------------------', this.result);
       this.http.get(this.url + this.username + '/' + this.result + '/' + this.gameHistory).subscribe(
         (response) => { 
           
@@ -137,6 +137,7 @@ export class AppComponent implements OnInit {
     this.steps += 1
     this.checkSteps() 
     this.input = eval(this.input.toString()  + "* 2")
+    console.log('INPUT ------------------------------', this.input);
     this.history.push({stepNumber: this.steps, operation: "* 2"})
     this.gameHistory += " * 2"
     this.hide = false  
