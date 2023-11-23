@@ -17,7 +17,7 @@ interface History {
 
 interface User {
   username: string;
-  score: number | BigInt; 
+  score: BigInt; 
   history: string;
 }
 
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   username: string = '';
   input: number = 1;
   oneTime: boolean = false;
-  maxscore: User = {username: '', score: 0, history: ''};
+  maxscore: User = {username: '', score: BigInt(0), history: ''};
   maxscore$!: Observable<User>; 
 
   hide: boolean = true; 
@@ -55,7 +55,11 @@ export class AppComponent implements OnInit {
     this.signalRService.addBroadcastDataListener(); 
     this.signalRService.maxScore$.subscribe((data) =>  { 
         this.maxscore.username = data.username; 
-        this.maxscore.score = data.score;
+        this.maxscore.score = BigInt(data.score);
+        //this.maxscore.score = BigInt(data.score.toString().slice(0, -1));
+        //console.log('BigInt(data.score.toString())----------------------------->', BigInt(data.score.toString().slice(0, -1)))
+        console.log('BigInt(data.score.toString())----------------------------->', BigInt(data.score))
+
     });    
   } 
  

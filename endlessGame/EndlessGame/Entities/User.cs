@@ -19,4 +19,12 @@ namespace EndlessGame.Entities
     public string? History { get; set; }
     public string Score { get; set; }
   }
+
+  public class UserViewModel
+  {
+    [Key]
+    public string? Username { get; set; }
+    public string? History { get; set; }
+    public string Score { get; set; }
+  }
 }
