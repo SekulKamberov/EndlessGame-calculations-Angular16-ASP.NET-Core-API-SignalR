@@ -52,6 +52,12 @@ namespace EndlessGame.Controllers
       var champion = context.Users.FirstOrDefault(s => s.Score == maxScore2.ToString());
 
       var user2 = users.FirstOrDefault(u => u.Username == username);
+      if(user2 == null)
+      {
+        context.Add(new User { Score = longScore.ToString(), Username = username, History = "" });
+        var saved = context.SaveChanges();
+        return Ok(score);
+      }
       var p = BigInteger.Parse(user2.Score.ToString());
       var p2 = BigInteger.Parse(champion.Score.ToString());
 
@@ -75,6 +81,8 @@ namespace EndlessGame.Controllers
         return Ok(currentUser);
       }
 
+
+
       if (user != null && BigInteger.Parse(user2.Score.ToString()) < longScore)
       {
         user.Score = longScore.ToString();
@@ -85,7 +93,7 @@ namespace EndlessGame.Controllers
 
       else
       {
-        context.Add(new UserViewModel { Score = longScore.ToString(), Username = username, History = history });
+        context.Add(new User { Score = longScore.ToString(), Username = username, History = history });
         var saved = context.SaveChanges();
         return Ok(score);
       }
