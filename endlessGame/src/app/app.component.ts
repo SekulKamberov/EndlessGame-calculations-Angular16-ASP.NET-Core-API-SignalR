@@ -51,9 +51,7 @@ export class AppComponent implements OnInit {
     this.signalRService.addBroadcastDataListener() 
     this.signalRService.maxScore$.subscribe((data) =>  {   
         this.maxscore.username = data.username  
-        this.hide = this.input.toString().length > 2 ? false : true
-        console.log('type', typeof this.input)
-        console.log('input', this.input)
+     
         this.maxscore.score = BigInt(data.score)  
     });     
   } 

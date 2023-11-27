@@ -30,63 +30,7 @@ namespace EndlessGame.Controllers
       _hub.Clients.All.SendAsync("score", champ);
       return Ok(new { Message = "Request Completed" });
     }
-
-    [HttpGet("user/{username}/{score}/{gameHistory}")]
-    public IActionResult User(string username, string? score, string gameHistory)
-    { 
-      var longScore = BigInteger.Parse(score);
-
-      var users = context.Users.AsQueryable(); 
-      var maxScore2 = users.Select(s => BigInteger.Parse(s.Score.ToString())).ToList().Max();
-       
-      var champion = context.Users.FirstOrDefault(s => s.Score == maxScore2.ToString());
-
-      var user2 = users.FirstOrDefault(u => u.Username == username);
-      if(user2 == null)
-      {
-        context.Add(new User { Score = longScore.ToString(), Username = username, History = "" });
-        var saved = context.SaveChanges();
-        return Ok(score);
-      }
-      var p = BigInteger.Parse(user2.Score.ToString());
-      var p2 = BigInteger.Parse(champion.Score.ToString());
-
-      var champion2 = new UserViewModel() { Username = champion.Username, History = champion.History, Score = p2.ToString() };
-      var user = new UserViewModel() { Username = user2.Username, History = user2.History, Score = p.ToString() };
-      var history = gameHistory != "|" ? gameHistory : "";
-      if (longScore > maxScore2)
-      {
-        var champ = new UserViewModel { Username = username, Score = longScore.ToString(), History = history };
-        _hub.Clients.All.SendAsync("score", champ);
-      }
-
-      else
-      {
-        _hub.Clients.All.SendAsync("score", champion);
-      }
-
-      if (user != null && BigInteger.Parse(user2.Score.ToString()) >= longScore)
-      {
-        var currentUser = new UserViewModel { Username = user.Username, Score = user.Score, History = user.History };
-        return Ok(currentUser);
-      }
-       
-      if (user != null && BigInteger.Parse(user2.Score.ToString()) < longScore)
-      {
-        user.Score = longScore.ToString();
-        user.History = user.History + history;
-        var saved = context.SaveChanges();
-        return Ok(score);
-      }
-
-      else
-      {
-        context.Add(new User { Score = longScore.ToString(), Username = username, History = history });
-        var saved = context.SaveChanges();
-        return Ok(score);
-      }
-    }
-
+     
     [HttpPost("user/")]
     public IActionResult User([FromBody] UserBindingModel dat)
     { 
