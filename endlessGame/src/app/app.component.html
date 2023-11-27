@@ -28,16 +28,15 @@
       <div class="container-fluid col-lg-10 col-md-9 col-sm-10 col-xs-10">
  
             <div class="input-group input-group-sm col-sm-12 mt-5 mb-2">
-              <h1 class="text-center">{{maxscore.username}} Record: {{maxscore.score}}</h1> 
+              <h1 class="text-break">{{maxscore.username}}  </h1> 
             </div>   
-
-            <div class="input-group input-group-sm col-sm-12 mt-5"> 
-              <h3 >{{username}} score {{result}} </h3>
-            
+            <h2 class="text-break col-sm-6">Record: {{maxscore.score}}</h2> 
+            <div class="text-break input-group-sm col-sm-6 mt-5"> 
+              <h3>{{username}} score {{result}} </h3> 
             </div>
 
-            <div class="col-sm-12" *ngIf="result">
-              <input type="number" min="1" name="input" [(ngModel)]="input" *ngIf="hide" 
+            <div class="col-sm-12" *ngIf="hide">  
+              <input type="number" min="1" name="input" [(ngModel)]="input"  
                 class="input-group input-group-sm col-sm-6 mb-3" 
               /> 
             </div>

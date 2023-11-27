@@ -25,6 +25,6 @@ namespace EndlessGame.Entities
     [Key]
     public string? Username { get; set; }
     public string? History { get; set; }
-    public string Score { get; set; }
+    public string? Score { get; set; }
   }
 }

@@ -23,8 +23,7 @@ namespace EndlessGame.Controllers
 
     [HttpGet]
     public IActionResult Get()
-    {
-      //var maxScore = context.Users.Max(s => (long?)s.Score);
+    { 
       var maxScore = context.Users.Select(s => BigInteger.Parse(s.Score.ToString())).ToList().Max();
       var champ = context.Users.FirstOrDefault(s => BigInteger.Parse(s.Score.ToString()) == maxScore);
 
@@ -34,21 +33,12 @@ namespace EndlessGame.Controllers
 
     [HttpGet("user/{username}/{score}/{gameHistory}")]
     public IActionResult User(string username, string? score, string gameHistory)
-    {
-      //var a = (BigInteger.Parse("394635443963561656323946354439635616563239463544396356165632") * BigInteger.Parse("394635443963561656323946354439635616563239463544396356165632")).ToString();
-      //BigInteger number1;
-      //bool succeeded1 = BigInteger.TryParse("12347534159895123", out number1);
+    { 
       var longScore = BigInteger.Parse(score);
 
-      var users = context.Users.AsQueryable();
-      //var maxScore = users.Max(s => (long?)s.Score);
+      var users = context.Users.AsQueryable(); 
       var maxScore2 = users.Select(s => BigInteger.Parse(s.Score.ToString())).ToList().Max();
-
-      //var maxScore = users.Max(s => (long?)s.Score);
-      //var maxScore = users.Select(s => {
-      //    var current = BigInteger.Parse(s.Score.ToString());
-
-      //}); 
+       
       var champion = context.Users.FirstOrDefault(s => s.Score == maxScore2.ToString());
 
       var user2 = users.FirstOrDefault(u => u.Username == username);
@@ -80,9 +70,7 @@ namespace EndlessGame.Controllers
         var currentUser = new UserViewModel { Username = user.Username, Score = user.Score, History = user.History };
         return Ok(currentUser);
       }
-
-
-
+       
       if (user != null && BigInteger.Parse(user2.Score.ToString()) < longScore)
       {
         user.Score = longScore.ToString();
@@ -110,6 +98,13 @@ namespace EndlessGame.Controllers
       var champion = context.Users.FirstOrDefault(s => s.Score == maxScore2.ToString());
 
       var user2 = users.FirstOrDefault(u => u.Username == dat.Username);
+      if (user2 == null)
+      {
+        context.Add(new User { Score = dat.Score, Username = dat.Username, History = "" });
+        var saved = context.SaveChanges();
+        return Ok();
+      }
+
       var p = BigInteger.Parse(user2.Score.ToString());
       var p2 = BigInteger.Parse(champion.Score.ToString());
 
